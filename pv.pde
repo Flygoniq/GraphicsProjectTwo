@@ -114,6 +114,12 @@ float d(pt P, pt Q) {return sqrt(d2(P,Q));  };                                  
 float d2(pt P, pt Q) {return sq(Q.x-P.x)+sq(Q.y-P.y); };                                             // AB*AB (Distance squared)
 boolean isSame(pt A, pt B) {return (A.x==B.x)&&(A.y==B.y) ;}                                         // A==B
 boolean isSame(pt A, pt B, float e) {return d2(A,B)<sq(e);}                                          // |AB|<e
+boolean LineStabsEdge(pt A, pt B, pt C, pt D) {
+  vec AB = new vec(B.x - A.x, B.y - A.y);
+  vec AC = new vec(C.x - A.x, C.y - A.y);
+  vec AD = new vec(D.x - A.x, D.y - A.y);
+  return (det(AB, AC) > 0 && det (AB, AD) < 0 || det(AB, AC) < 0 && det (AB, AD) > 0);
+}
 
 // transform 
 pt R(pt Q, float a) {float dx=Q.x, dy=Q.y, c=cos(a), s=sin(a); return new pt(c*dx+s*dy,-s*dx+c*dy); };  // Q rotated by angle a around the origin

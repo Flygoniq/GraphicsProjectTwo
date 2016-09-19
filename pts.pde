@@ -9,7 +9,7 @@ class pts
   int nv=0;                                // number of vertices in the sequence
   int pv = 0;                              // picked vertex 
   int iv = 0;                              // insertion index 
-  int maxnv = 100*2*2*2*2*2*2*2*2;         //  max number of vertices
+  int maxnv = 100*2*2;//*2*2*2*2*2*2;         //  max number of vertices
   Boolean loop=true;                       // is a closed loop
 
   pt[] G = new pt [maxnv];                 // geometry table (vertices)
@@ -55,6 +55,19 @@ class pts
      for (int j=0; j<w; j++) 
        addPt(P(.7*height*j/(w-1)+.1*height,.7*height*i/(w-1)+.1*height));
    }    
+
+
+  //Operate on Polygon
+  int next(int v) {return (v+1) % nv;}
+  int prev(int v) {return (v + nv - 1) % nv;}
+  
+  void checkStabs(pt A, pt B) {
+    for (int i = 0; i < nv; i++) {
+      if (LineStabsEdge(A, B, G[i], G[next(i)])) {
+        pen(red, 4); edge(G[i], G[next(i)]);
+      }
+    }
+  }
 
 
   // PICK AND EDIT INDIVIDUAL POINT

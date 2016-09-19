@@ -33,7 +33,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
 
     if(key=='a') ; 
     if(key=='b') ; 
-    if(key=='c') P.resetOnCircle(P.nv);
+    if(key=='c') polygons[0].resetOnCircle(polygons[0].nv);
     if(key=='d') ; 
     if(key=='e') ;
     if(key=='f') ;
@@ -69,14 +69,14 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='I') ; 
     if(key=='J') ;
     if(key=='K') ;
-    if(key=='L') P.loadPts("data/pts");    // load current positions of control points from file
+    if(key=='L') polygons[0].loadPts("data/pts");    // load current positions of control points from file
     if(key=='M') ;
     if(key=='N') ;
     if(key=='O') ;
     if(key=='P') ; 
     if(key=='Q') exit();  // quit application
     if(key=='R') ; 
-    if(key=='S') P.savePts("data/pts");    // save current positions of control points on file
+    if(key=='S') polygons[0].savePts("data/pts");    // save current positions of control points on file
     if(key=='T') ;
     if(key=='U') ;
     if(key=='V') ;
@@ -90,7 +90,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='|') ; 
     
     if(key=='[') ; 
-    if(key==']') P.fitToCanvas();  
+    if(key==']') polygons[0].fitToCanvas();  
     if(key=='\\') ;
     
     if(key==':') ; 
@@ -130,12 +130,12 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
 void mousePressed()   // executed when the mouse is pressed
   {
   if (!keyPressed || (key=='a') || (key=='i') || (key=='x'))  
-  P.pickClosest(Mouse()); // pick vertex closest to mouse: sets pv ("picked vertex") in pts
+  polygons[0].pickClosest(Mouse()); // pick vertex closest to mouse: sets pv ("picked vertex") in pts
   if (keyPressed) 
      {
-     if (key=='a')  P.addPt(Mouse()); // appends vertex after the last one
-     if (key=='i')  P.insertClosestProjection(Mouse()); // inserts vertex at closest projection of mouse
-     if (key=='d')  P.deletePickedPt(); // deletes vertex closeset to mouse
+     if (key=='a')  polygons[0].addPt(Mouse()); // appends vertex after the last one
+     if (key=='i')  polygons[0].insertClosestProjection(Mouse()); // inserts vertex at closest projection of mouse
+     if (key=='d')  polygons[0].deletePickedPt(); // deletes vertex closeset to mouse
      } 
   if (keyPressed && key=='s') {A=Mouse(); B=Mouse();} 
   change=true;
@@ -149,12 +149,12 @@ void mouseReleased()   // executed when the mouse is pressed
 
 void mouseDragged() // executed when the mouse is dragged (while mouse buttom pressed)
   {
-  if (!keyPressed || (key=='a')|| (key=='i')) P.dragPicked();   // drag selected point with mouse
+  if (!keyPressed || (key=='a')|| (key=='i')) polygons[0].dragPicked();   // drag selected point with mouse
   if (keyPressed) {
       if (key=='.') f+=2.*float(mouseX-pmouseX)/width;  // adjust current frame   
-      if (key=='t') P.dragAll(); // move all vertices
-      if (key=='r') P.rotateAllAroundCentroid(Mouse(),Pmouse()); // turn all vertices around their center of mass
-      if (key=='z') P.scaleAllAroundCentroid(Mouse(),Pmouse()); // scale all vertices with respect to their center of mass
+      if (key=='t') polygons[0].dragAll(); // move all vertices
+      if (key=='r') polygons[0].rotateAllAroundCentroid(Mouse(),Pmouse()); // turn all vertices around their center of mass
+      if (key=='z') polygons[0].scaleAllAroundCentroid(Mouse(),Pmouse()); // scale all vertices with respect to their center of mass
       }
   if (keyPressed && key=='s') B=Mouse(); 
   change=true;
@@ -162,7 +162,7 @@ void mouseDragged() // executed when the mouse is dragged (while mouse buttom pr
 
 void mouseWheel(MouseEvent event) { // reads mouse wheel and uses to zoom
   float s = event.getAmount();
-  P.scaleAllAroundCentroid(s/100);
+  polygons[0].scaleAllAroundCentroid(s/100);
   change=true;
   }
 
