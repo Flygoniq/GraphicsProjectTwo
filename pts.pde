@@ -61,11 +61,28 @@ class pts
   int next(int v) {return (v+1) % nv;}
   int prev(int v) {return (v + nv - 1) % nv;}
   
-  void checkStabs(pt A, pt B) {
+  boolean checkStabs(pt A, pt B) {
+    TContainer Ts = new TContainer();
     for (int i = 0; i < nv; i++) {
       if (LineStabsEdge(A, B, G[i], G[next(i)])) {
         pen(red, 4); edge(G[i], G[next(i)]);
+        Ts.add(intersectionParameter(A, V(A, B), G[i], G[next(i)]));
+        //pt X = P(A, t, V);
+        //pen(red, 2); show(X, 5);
       }
+    }
+    try {
+      goodTs = Ts.getTs();
+      for (float f : goodTs) {
+        pt X = P(A, f, V(A, B));
+        pen(red, 2); show(X, 5);
+      }
+      cuttablePolygon = this;
+      return true;
+    } catch (NoSuchElementException e) {
+      cuttablePolygon = null;
+      goodTs = null;
+      return false;
     }
   }
 

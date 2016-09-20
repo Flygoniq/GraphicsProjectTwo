@@ -121,6 +121,12 @@ boolean LineStabsEdge(pt A, pt B, pt C, pt D) {
   return (det(AB, AC) > 0 && det (AB, AD) < 0 || det(AB, AC) < 0 && det (AB, AD) > 0);
 }
 
+float intersectionParameter(pt P, vec V, pt A, pt B) {
+  vec AB = new vec(B.x - A.x, B.y - A.y);
+  vec AP = new vec(P.x - A.x, P.y - A.y);
+  return -1 * det(AB, AP) / det(AB, V);
+}
+
 // transform 
 pt R(pt Q, float a) {float dx=Q.x, dy=Q.y, c=cos(a), s=sin(a); return new pt(c*dx+s*dy,-s*dx+c*dy); };  // Q rotated by angle a around the origin
 pt R(pt Q, float a, pt C) {float dx=Q.x-C.x, dy=Q.y-C.y, c=cos(a), s=sin(a); return P(C.x+c*dx-s*dy, C.y+s*dx+c*dy); };  // Q rotated by angle a around point C

@@ -1,10 +1,13 @@
 // Template for 2D projects
 // Author: Jarek ROSSIGNAC
 import processing.pdf.*;    // to save screen shots as PDFs, does not always work: accuracy problems, stops drawing or messes up some curves !!!
+import java.util.NoSuchElementException;
 
 //**************************** global variables ****************************
 int polyCount = 1;
 pts[] polygons;// class containing array of points, used to standardize GUI
+pts cuttablePolygon; //polygon that can currently be legally cut by the green arrow.
+float[] goodTs;  //t parameters for points on currently cuttable polygon.
 float t=0, f=0;
 boolean animate=true, fill=false, timing=false;
 boolean lerp=true, slerp=true, spiral=true; // toggles to display vector interpoations
@@ -32,9 +35,24 @@ void draw()      // executed at each frame
   
     background(white); // clear screen and paints white background
     pen(black,3); fill(yellow); polygons[0].drawCurve(); polygons[0].IDs(); // shows polyloop with vertex labels
-    stroke(red); pt G=polygons[0].Centroid(); show(G,10); // shows centroid
-    pen(green,5); arrow(A,B);            // defines line style wiht (5) and color (green) and draws starting arrow from A to B
-    polygons[0].checkStabs(A,B);
+    stroke(red); //pt G=polygons[0].Centroid(); show(G,10); // shows centroid
+    
+    //act on all polygons
+    cuttablePolygon = null;
+    goodTs = null;
+    for (pts polygon : polygons) {
+      if (polygon == null) break;
+      show(polygon.Centroid(), 10); //show centroids
+      if (cuttablePolygon == null) {
+        polygon.checkStabs(A,B);
+      }
+    }
+    if (cuttablePolygon == null) {
+      pen(red,5); arrow(A,B);
+    } else {
+      pen(green,5); arrow(A,B);
+    }
+    
 
   if(recordingPDF) endRecordingPDF();  // end saving a .pdf file with the image of the canvas
 
