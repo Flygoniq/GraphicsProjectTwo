@@ -6,6 +6,7 @@
  * Find the points to cut at.
  * Divide the polygon being cut into two more polygons.
  * We need to keep track of shared edges somehow.
+ * We're gonna need a way to select the closest edge.  Heuristic for this? Only check edges linked to the closest point perhaps?
 * Move shapes out of starting area.
  * Maintain a ghost image of the original starting area as a polygon.
  * Allow polygons to be translated, rotated, and scaled.  Do not allow them to be overlapping the starting area or each other when save is attempted.
