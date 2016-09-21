@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 int polyCount = 1;
 pts[] polygons;// class containing array of points, used to standardize GUI
 pts cuttablePolygon; //polygon that can currently be legally cut by the green arrow.
-float[] goodTs;  //t parameters for points on currently cuttable polygon.
+floatptPair[] goodTs;  //t parameters for points on currently cuttable polygon.
 float t=0, f=0;
 boolean animate=true, fill=false, timing=false;
 boolean lerp=true, slerp=true, spiral=true; // toggles to display vector interpoations

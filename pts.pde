@@ -66,15 +66,15 @@ class pts
     for (int i = 0; i < nv; i++) {
       if (LineStabsEdge(A, B, G[i], G[next(i)])) {
         pen(red, 4); edge(G[i], G[next(i)]);
-        Ts.add(intersectionParameter(A, V(A, B), G[i], G[next(i)]));
+        Ts.add(intersectionParameter(A, V(A, B), G[i], G[next(i)]), G[i]);
         //pt X = P(A, t, V);
         //pen(red, 2); show(X, 5);
       }
     }
     try {
       goodTs = Ts.getTs();
-      for (float f : goodTs) {
-        pt X = P(A, f, V(A, B));
+      for (floatptPair f : goodTs) {
+        pt X = P(A, f.f, V(A, B));
         pen(red, 2); show(X, 5);
       }
       cuttablePolygon = this;

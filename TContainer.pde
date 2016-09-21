@@ -1,68 +1,83 @@
 
 
 class TContainer {
-  float[] Ts;
+  floatptPair[] Ts;
   int behind, inside, ahead, size;
-  float closestBehind, closestAhead, backInside, frontInside;
+  floatptPair closestBehind, closestAhead, backInside, frontInside;
   
   TContainer() {
-    Ts = new float[20];
+    Ts = new floatptPair[20];
     behind = 0;
     inside = 0;
     ahead = 0;
     size = 0;
-    closestBehind = 0;
-    closestAhead = 0;
-    backInside = -1;
-    frontInside = 1;
+    closestBehind = new floatptPair(0);
+    closestAhead = new floatptPair(0);
+    backInside = new floatptPair(-1);
+    frontInside = new floatptPair(1);
   }
   
   void grow () {
-    float[] temp = new float[Ts.length * 2];
+    floatptPair[] temp = new floatptPair[Ts.length * 2];
     for (int i = 0; i < Ts.length; i++) {
       temp[i] = Ts[i];
     }
     Ts = temp;
   }
   
-  void add(float t) {
+  void add(float t, pt p) {
     if (size == Ts.length) {
       grow();
     }
-    Ts[size++] = t;
+    floatptPair current = new floatptPair(t, p);
+    Ts[size++] = current;
     if (t < 0) {
       behind++;
-      if (closestBehind == 0 || t > closestBehind) {
-        closestBehind = t;
+      if (closestBehind.f == 0 || t > closestBehind.f) {
+        closestBehind = current;
       }
     } else if (t <= 1) {
       inside++;
-      if (backInside == -1) {
-        backInside = t;
-      } else if (frontInside == 1) {
-        frontInside = t;
+      if (backInside.f == -1) {
+        backInside = current;
+      } else if (frontInside.f == 1) {
+        frontInside = current;
       }
     } else {
       ahead++;
-      if (closestAhead == 0 || t < closestAhead) {
-        closestAhead = t;
+      if (closestAhead.f == 0 || t < closestAhead.f) {
+        closestAhead = current;
       }
     }
   }
   
   //returns the pair of points to cut at, or throws noSuchElement
-  float[] getTs() {
-    float[] ans = new float[2];
+  floatptPair[] getTs() {
     if (inside == 0 && ahead % 2 == 1 && behind % 2 == 1) {
-      return new float[] {closestBehind, closestAhead};
+      return new floatptPair[] {closestBehind, closestAhead};
     } else if (inside == 2 && ahead % 2 == 0 && behind % 2 == 0) {
-      return new float[] {backInside, frontInside};
+      return new floatptPair[] {backInside, frontInside};
     } else if (inside == 1 && ahead % 2 == 1 && behind % 2 == 0) {
-      return new float[] {backInside, closestAhead};
+      return new floatptPair[] {backInside, closestAhead};
     } else if (inside == 1 && ahead % 2 == 0 && behind % 2 == 1) {
-      return new float[] {closestBehind, backInside};
+      return new floatptPair[] {closestBehind, backInside};
     } else {
       throw new NoSuchElementException();
     }
+  }
+}
+
+class floatptPair {
+  float f;
+  pt p;
+  
+  floatptPair (float f) {
+    this.f = f;
+    p = null;
+  }
+  
+  floatptPair (float f, pt p) {
+    this.f = f;
+    this.p = p;
   }
 }
