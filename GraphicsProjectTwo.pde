@@ -48,9 +48,11 @@ void draw()      // executed at each frame
       }
     }
     if (cuttablePolygon == null) {
-      pen(red,5); arrow(A,B);
+      pen(red,5);
+      arrow(A,B);
     } else {
-      pen(green,5); arrow(A,B);
+      pen(green,5);
+      arrow(A,B);
     }
     
 

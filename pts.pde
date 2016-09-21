@@ -85,6 +85,39 @@ class pts
       return false;
     }
   }
+  
+  void split(pt A, pt B) {
+    pts poly = new pts();
+    pts poly2 = new pts();
+    boolean flag = false;
+    int count = 0;
+    pt temp1 = P(A, goodTs[0].f, V(A, B));
+    pt temp2 = P(A, goodTs[1].f, V(A, B));
+    for (int i = 0; i < nv; i++) {
+      poly2.addPt(G[i]);
+      if (isSame(G[i], goodTs[0].p)) {
+          poly2.addPt(temp1);
+          poly.addPt(temp2);
+          poly.addPt(temp1);
+          flag = true;
+      } else if (isSame(G[i], goodTs[1].p)) {
+          poly2.addPt(temp2);
+          poly.addPt(temp1);
+          poly.addPt(temp2);
+          flag = true;
+      } else if (flag) {
+        poly.addPt(G[i]);
+        if (isSame(G[i], goodTs[0].p)) {
+          poly2.addPt(temp2);
+        } else if (isSame(G[i], goodTs[1].p)) {
+          poly2.addPt(temp1);
+        }
+      } else {
+        poly2.addPt(G[i]);
+      }
+    }
+    this = poly2;
+  }
 
 
   // PICK AND EDIT INDIVIDUAL POINT
