@@ -22,6 +22,7 @@ pt A=P(200,100), B=P(500,300), closestPoint;
 int index = 0;
 int size = 0;
 int solved = 0;
+pt o = new pt(0,0);
 pts ghost = null;
 int gameStage = -1; //-1 = make shape, 0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
 //**************************** initialization ****************************
@@ -120,7 +121,6 @@ void draw()      // executed at each frame
         //polygons[i].IDs();
       }
       if (!mousePressed) {
-        pt o = new pt(0,0);
         selectedPolygon = null;
         for (int i = 0; i < size; i++) {
           if (polygons[i].countStabs(Mouse(), o) % 2 == 1) {
