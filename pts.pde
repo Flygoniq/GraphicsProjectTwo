@@ -62,7 +62,15 @@ class pts
   int prev(int v) {return (v + nv - 1) % nv;}
   
   int countStabs(pt A, pt B) {
-    return 0;
+    int stabs = 0;
+    for (int i = 0; i < nv; i++) {
+      if (LineStabsEdge(A, B, G[i], G[next(i)])) {
+        if (intersectionParameter(A, V(A, B), G[i], G[next(i)]) >= 0) {
+          stabs++;
+        }
+      }
+    }
+    return stabs;
   }
   
   boolean checkStabs(pt A, pt B) {
@@ -194,8 +202,9 @@ class pts
    
   void drawCurve() 
     {
-    if(loop) drawClosedCurve(); 
-    else drawOpenCurve(); 
+    //if(loop)
+    drawClosedCurve();
+    //else drawOpenCurve(); 
     }
     
   void drawOpenCurve() 

@@ -39,9 +39,9 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='f') ;
     if(key=='g') ; 
     if(key=='h') ;
-    if(key=='i') ; 
+    if(key=='i') println("Size: " + polygons[2]); 
     if(key=='j') ;
-    if(key=='k') {
+    if(key=='k' && gameStage == 0) {
       pts[] newPoly = cuttablePolygon.split(A, B);
       polygons[index] = newPoly[0];
       polygons[size] = newPoly[1];
@@ -158,9 +158,9 @@ void mouseDragged() // executed when the mouse is dragged (while mouse buttom pr
   if (!keyPressed || (key=='a')|| (key=='i')) dragPicked();   // drag selected point with mouse
   if (keyPressed) {
       if (key=='.') f+=2.*float(mouseX-pmouseX)/width;  // adjust current frame   
-      if (key=='t') polygons[0].dragAll(); // move all vertices
-      if (key=='r') polygons[0].rotateAllAroundCentroid(Mouse(),Pmouse()); // turn all vertices around their center of mass
-      if (key=='z') polygons[0].scaleAllAroundCentroid(Mouse(),Pmouse()); // scale all vertices with respect to their center of mass
+      if (key=='t') selectedPolygon.dragAll(); // move all vertices
+      if (key=='r') selectedPolygon.rotateAllAroundCentroid(Mouse(),Pmouse()); // turn all vertices around their center of mass
+      if (key=='z') selectedPolygon.scaleAllAroundCentroid(Mouse(),Pmouse()); // scale all vertices with respect to their center of mass
       }
   if (keyPressed && key=='s') B=Mouse(); 
   change=true;
@@ -168,7 +168,7 @@ void mouseDragged() // executed when the mouse is dragged (while mouse buttom pr
 
 void mouseWheel(MouseEvent event) { // reads mouse wheel and uses to zoom
   float s = event.getAmount();
-  polygons[0].scaleAllAroundCentroid(s/100);
+  selectedPolygon.scaleAllAroundCentroid(s/100);
   change=true;
   }
 

@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 import controlP5.*;
 ControlP5 cp5;
 
-int polyCount = 1;
 pts[] polygons;// class containing array of points, used to standardize GUI
 pts cuttablePolygon, selectedPolygon; //polygon that can currently be legally cut by the green arrow.
 floatptPair[] goodTs;  //t parameters for points on currently cuttable polygon.
@@ -35,6 +34,7 @@ void setup()               // executed once at the begining
   polygons[0].loadPts("data/pts");  // loads points form file saved with this program
   size++;
   closestPoint = new pt(0, 0);
+  selectedPolygon = polygons[0];
   //controlP5 buttons
   noStroke();
   cp5.addBang("TranslateMode")
@@ -52,11 +52,11 @@ void draw()      // executed at each frame
   if(recordingPDF) startRecordingPDF(); // starts recording graphics to make a PDF
   
     background(white); // clear screen and paints white background
-    pen(black,3); fill(yellow); // shows polyloop with vertex labels
-    for (pts polygon : polygons) {
-      if (polygon == null) break;
-      polygon.drawCurve();
-      polygon.IDs();
+    pen(black,3);
+    for (int i = 0; i < size; i++) {
+      fill(yellow);
+      polygons[i].drawCurve();
+      polygons[i].IDs();
     }
     
     if (gameStage == 0) { //code for the cutting part goes in here.
@@ -83,11 +83,18 @@ void draw()      // executed at each frame
     }
     
     if (gameStage == 1) {
-      pt m = new pt(mouseX, mouseY);
-      pt o = new pt(0,0);
-      vec arbitraryVec = new vec(-mouseY, -mouseY);
-      for (pts polygon : polygons) {
-        
+      if (!mousePressed) {
+        pt m = new pt(mouseX, mouseY);
+        pt o = new pt(0,0);
+        //vec arbitraryVec = new vec(-mouseY, -mouseY);
+        selectedPolygon = null;
+        for (int i = 0; i < size; i++) {
+          if (polygons[i].countStabs(m, o) % 2 == 1) {
+            selectedPolygon = polygons[i];
+            break;
+          }
+        }
+        println("Selected Polygon: " + selectedPolygon);
       }
     }
 
