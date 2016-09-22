@@ -24,7 +24,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='4') ;
     if(key=='5') ;
     if(key=='6') ;
-    if(key=='7') ;
+    if(key=='7') Play();
     if(key=='8') ;
     if(key=='9') ;
     if(key=='0') ; 
@@ -195,7 +195,7 @@ void mouseDragged() // executed when the mouse is dragged (while mouse buttom pr
   }  
 
 void mouseWheel(MouseEvent event) { // reads mouse wheel and uses to zoom
-  if (gameStage != 1) return;
+  if (gameStage != 1 || selectedPolygon == null) return;
   float s = event.getAmount();
   selectedPolygon.scaleAllAroundCentroid(s/100);
   change=true;
