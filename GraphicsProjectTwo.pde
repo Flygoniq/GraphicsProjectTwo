@@ -179,6 +179,21 @@ public void TranslateMode() {
 }
 
 public void Play() {
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (!(i == j)) {
+        if (polygons[i].touchytouchy(polygons[j])) {
+          gameStage = -1;
+          return;
+        }
+      }
+    }
+    if (ghost.touchytouchy(polygons[i])) {
+      gameStage = -1;
+      return;
+    }
+  }
+  println('a');
   gameStage = 2;
   selectedPolygon = null;
   cp5.getController("TranslateMode").hide();

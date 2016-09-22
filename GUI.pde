@@ -24,7 +24,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='4') ;
     if(key=='5') ;
     if(key=='6') ;
-    if(key=='7') ;
+    if(key=='7') Play();
     if(key=='8') ;
     if(key=='9') ;
     if(key=='0') ; 
@@ -42,11 +42,13 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='i') println("Size: " + polygons[2]); 
     if(key=='j') ;
     if(key=='k' && gameStage == 0) {
-      pts[] newPoly = cuttablePolygon.split(A, B);
-      polygons[index] = newPoly[0];
-      polygons[size] = newPoly[1];
-      size++;
-      };
+      if (cuttablePolygon != null) {
+        pts[] newPoly = cuttablePolygon.split(A, B);
+        polygons[index] = newPoly[0];
+        polygons[size] = newPoly[1];
+        size++;
+      }
+    };
     if(key=='l') ;
     if(key=='m') ;
     if(key=='n') ;

@@ -155,20 +155,20 @@ class pts
   }
   
   boolean touchytouchy(pts poly) {
-    for (int i = 0; i < G.length - 1; i++) {
-      float px = G[i].x;
-      float py = G[i].y;
-      float rx = G[i + 1].x;
-      float ry = G[i + 1].y;
-      for (int j = 0; j < poly.G.length - 1; j++) {
-        float qx = poly.G[i].x;
-        float qy = poly.G[i].y;
-        float sx = poly.G[i + 1].x;
-        float sy = poly.G[i + 1].y;
+    for (int i = 1; i < nv - 1; i++) {
+      float px = G[i - 1].x;
+      float py = G[i - 1].y;
+      float rx = G[i].x;
+      float ry = G[i].y;
+      for (int j = 1; j < poly.nv - 1; j++) {
+        float qx = poly.G[i - 1].x;
+        float qy = poly.G[i - 1].y;
+        float sx = poly.G[i].x;
+        float sy = poly.G[i].y;
         float rxs = ((rx - px) * (sy - qy) - (ry - py) * (sx - qx));
         float u = ((qx - px) * (ry - py) - (qy - py) * (rx - px)) / rxs;
         float t = ((qx - px) * (sy - qy) - (qy - py) * (sx - qx)) / rxs;
-        if (rxs != 0 && t >= 0 && t <= 1 && u >= 0 && u <= 0) {
+        if (rxs != 0 && t >= 0 && t <= 1 && u >= 0 && u <= 1) {
           return true;
         }
       }
