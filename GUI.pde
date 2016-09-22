@@ -173,8 +173,8 @@ void mouseWheel(MouseEvent event) { // reads mouse wheel and uses to zoom
   }
 
 //**************************** text for name, title and help  ****************************
-String title ="Split Polygon Puzzle",            name ="Student: First LAST",
-       subtitle = "  base code for P2 for Jarek Rossignac's CS3451 class in the Fall 2016",
+String title ="Split Polygon Puzzle",            name ="Student: Alan JIANG, Janet LIANG",
+       subtitle = "Puzzle game for P2 for Jarek Rossignac's CS3451 class in the Fall 2016",
        
        menu="?:(show/hide) help, ~/!/@:snap pdf/jpg/fif, `:(start/stop) recording, S/L:save/load, Q:quit",
        guide="click&drag:edit, d&click:delete, i&click&drag:insrt, s&click&drag:split"; // help info
