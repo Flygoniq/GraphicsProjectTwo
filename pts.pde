@@ -86,7 +86,7 @@ class pts
     }
   }
   
-  void split(pt A, pt B) {
+  pts[] split(pt A, pt B) {
     pts poly = new pts();
     pts poly2 = new pts();
     boolean flag = false;
@@ -113,10 +113,12 @@ class pts
           poly2.addPt(temp1);
         }
       } else {
-        poly2.addPt(G[i]);
+          if (G[i] != null) {
+          poly2.addPt(G[i]);
+        }
       }
     }
-    this = poly2;
+    return new pts[] {poly, poly2};
   }
 
 
