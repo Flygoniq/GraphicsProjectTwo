@@ -63,6 +63,7 @@ class pts
   
   boolean checkStabs(pt A, pt B) {
     TContainer Ts = new TContainer();
+    
     for (int i = 0; i < nv; i++) {
       if (LineStabsEdge(A, B, G[i], G[next(i)])) {
         pen(red, 4); edge(G[i], G[next(i)]);
@@ -88,44 +89,42 @@ class pts
   
   pts[] split(pt A, pt B) {
     pts poly = new pts();
+    poly.declare();
     pts poly2 = new pts();
-    boolean flag = false;
+    poly2.declare();
+    boolean step2 = false;
+    boolean step3 = false;
     pt temp1 = P(A, goodTs[0].f, V(A, B));
-    print(temp1);
     pt temp2 = P(A, goodTs[1].f, V(A, B));
-    print(temp2);
     for (int i = 0; i < nv; i++) {
-      poly2.addPt(G[i]);
-      if (isSame(G[i], goodTs[0].p)) {
-          poly2.addPt(temp1);
-          poly.addPt(temp2);
-          poly.addPt(temp1);
-          flag = true;
-      } else if (isSame(G[i], goodTs[1].p)) {
-          poly2.addPt(temp2);
-          poly.addPt(temp1);
-          poly.addPt(temp2);
-          flag = true;
-      } else if (flag) {
-        poly.addPt(G[i]);
-        if (isSame(G[i], goodTs[0].p)) {
-          poly2.addPt(temp2);
-          flag = false;
-        } else if (isSame(G[i], goodTs[1].p)) {
-          poly2.addPt(temp1);
-          flag = false;
-        }
-      } else {
-          if (G[i] != null) {
+      if (G[i] != null) {
+        if (step3) {
           poly2.addPt(G[i]);
+        } else if (step2) {
+          poly.addPt(G[i]);
+          if (isSame(G[i], goodTs[0].p)) {
+            poly2.addPt(temp2);
+            step3 = true;
+          } else if (isSame(G[i], goodTs[1].p)) {
+            poly2.addPt(temp1);
+            step3 = true;
+          }
+        } else {
+          if (isSame(G[i], goodTs[0].p)) {
+              poly2.addPt(temp1);
+              poly.addPt(temp2);
+              poly.addPt(temp1);
+              step2 = true;
+          } else if (isSame(G[i], goodTs[1].p)) {
+              poly2.addPt(temp2);
+              poly.addPt(temp1);
+              poly.addPt(temp2);
+              step2 = true;
+          }
         }
       }
     }
-<<<<<<< HEAD
     return new pts[] {poly, poly2};
-=======
-    //this = poly2;
->>>>>>> origin/master
   }
 
 

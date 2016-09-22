@@ -17,6 +17,8 @@ boolean lerp=true, slerp=true, spiral=true; // toggles to display vector interpo
 int ms=0, me=0; // milli seconds start and end for timing
 int npts=20000; // number of points
 pt A=P(200,100), B=P(500,300);
+int index = 0;
+int size = 0;
 int gameStage = 0; //0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
 //**************************** initialization ****************************
 void setup()               // executed once at the begining 
@@ -31,7 +33,7 @@ void setup()               // executed once at the begining
   polygons[0].declare(); // declares all points in P. MUST BE DONE BEFORE ADDING POINTS 
   // P.resetOnCircle(4); // sets P to have 4 points and places them in a circle on the canvas
   polygons[0].loadPts("data/pts");  // loads points form file saved with this program
-  
+  size++;
   //controlP5 buttons
   
   
@@ -54,11 +56,14 @@ void draw()      // executed at each frame
       cuttablePolygon = null;
       goodTs = null;
       stroke(red);
-      for (pts polygon : polygons) {
-        if (polygon == null) break;
-        show(polygon.Centroid(), 10); //show centroids
+      for (int i = 0; i < polygons.length - 1; i++) {
+        if (polygons[i] == null) break;
+        show(polygons[i].Centroid(), 10); //show centroids
         if (cuttablePolygon == null) {
-          polygon.checkStabs(A,B);
+          boolean cut = polygons[i].checkStabs(A,B);
+          if (cut) {
+            index = i;
+          }
         }
       }
       if (cuttablePolygon == null) {
@@ -69,18 +74,13 @@ void draw()      // executed at each frame
         arrow(A,B);
       }
     }
-<<<<<<< HEAD
     if (cuttablePolygon == null) {
       pen(red,5);
       arrow(A,B);
     } else {
-      cuttablePolygon.split(A, B);
       pen(green,5);
       arrow(A,B);
     }
-=======
->>>>>>> origin/master
-    
 
   if(recordingPDF) endRecordingPDF();  // end saving a .pdf file with the image of the canvas
 

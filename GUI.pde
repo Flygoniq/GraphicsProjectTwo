@@ -41,7 +41,12 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='h') ;
     if(key=='i') ; 
     if(key=='j') ;
-    if(key=='k') ;   
+    if(key=='k') {
+      pts[] newPoly = cuttablePolygon.split(A, B);
+      polygons[index] = newPoly[0];
+      polygons[size] = newPoly[1];
+      size++;
+      };   
     if(key=='l') ;
     if(key=='m') ;
     if(key=='n') ;
