@@ -1,5 +1,3 @@
-
-
 class TContainer {
   floatptPair[] Ts;
   int behind, inside, ahead, size;

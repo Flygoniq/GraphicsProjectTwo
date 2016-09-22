@@ -9,7 +9,7 @@ ControlP5 cp5;
 
 int polyCount = 1;
 pts[] polygons;// class containing array of points, used to standardize GUI
-pts cuttablePolygon; //polygon that can currently be legally cut by the green arrow.
+pts cuttablePolygon, selectedPolygon; //polygon that can currently be legally cut by the green arrow.
 floatptPair[] goodTs;  //t parameters for points on currently cuttable polygon.
 float t=0, f=0;
 boolean animate=true, fill=false, timing=false;
@@ -35,7 +35,13 @@ void setup()               // executed once at the begining
   polygons[0].loadPts("data/pts");  // loads points form file saved with this program
   size++;
   //controlP5 buttons
-  
+  noStroke();
+  cp5.addBang("TranslateMode")
+       .setPosition(1100, 700)
+       .setSize(80, 30)
+       .setLabel("Translate Mode")
+       .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+       ;
   
   } // end of setup
 
@@ -70,10 +76,12 @@ void draw()      // executed at each frame
         pen(red,5);
         arrow(A,B);
       } else {
+        //cuttablePolygon.split(A, B);
         pen(green,5);
         arrow(A,B);
       }
     }
+<<<<<<< HEAD
     if (cuttablePolygon == null) {
       pen(red,5);
       arrow(A,B);
@@ -81,6 +89,18 @@ void draw()      // executed at each frame
       pen(green,5);
       arrow(A,B);
     }
+=======
+    
+    if (gameStage == 1) {
+      pt m = new pt(mouseX, mouseY);
+      pt o = new pt(0,0);
+      vec arbitraryVec = new vec(-mouseY, -mouseY);
+      for (pts polygon : polygons) {
+        
+      }
+    }
+    
+>>>>>>> origin/master
 
   if(recordingPDF) endRecordingPDF();  // end saving a .pdf file with the image of the canvas
 
@@ -93,3 +113,13 @@ void draw()      // executed at each frame
   change=false; // to avoid capturing movie frames when nothing happens
   }  // end of draw
   
+  
+public void TranslateMode() {
+  if (gameStage == 0) {
+    gameStage = 1;
+    cp5.get(Bang.class, "TranslateMode").setLabel("Cutting Mode");
+  } else if (gameStage == 1) {
+    gameStage = 0;
+    cp5.get(Bang.class, "TranslateMode").setLabel("Translate Mode");
+  }
+}
