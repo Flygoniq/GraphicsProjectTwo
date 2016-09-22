@@ -222,6 +222,7 @@ public void Play() {
   label.hide();
   gameStage = 2;
   selectedPolygon = null;
+  label.hide();
   cp5.getController("TranslateMode").hide();
   cp5.getController("Play").hide();
 }
