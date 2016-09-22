@@ -19,7 +19,7 @@ pt A=P(200,100), B=P(500,300), closestPoint;
 int index = 0;
 int size = 0;
 pts ghost = null;
-int gameStage = 0; //-1 = make shape, 0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
+int gameStage = -1; //-1 = make shape, 0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
 //**************************** initialization ****************************
 void setup()               // executed once at the begining 
   {
@@ -53,23 +53,16 @@ void draw()      // executed at each frame
   if(recordingPDF) startRecordingPDF(); // starts recording graphics to make a PDF
   
     background(white); // clear screen and paints white background
-<<<<<<< HEAD
     pen(black,3); fill(yellow); // shows polyloop with vertex labels
     
     if (gameStage == -1) {
-      for (pts polygon : polygons) {
-        if (polygon == null) break;
-        polygon.drawCurve();
-        polygon.IDs();
+      pen(black,3);
+      for (int i = 0; i < size; i++) {
+        fill(yellow);
+        polygons[i].drawCurve();
+        polygons[i].IDs();
       }
       ghost = polygons[0];
-=======
-    pen(black,3);
-    for (int i = 0; i < size; i++) {
-      fill(yellow);
-      polygons[i].drawCurve();
-      polygons[i].IDs();
->>>>>>> a47600f1aaf98d12291b3d8dcb0d40f9e4c1769b
     }
     
     if (gameStage == 0) { //code for the cutting part goes in here.
@@ -95,15 +88,8 @@ void draw()      // executed at each frame
       }
     }
     if (gameStage == 1) {
-<<<<<<< HEAD
       fill(118, 118, 118);
       ghost.drawCurve();
-      pt m = new pt(mouseX, mouseY);
-      pt o = new pt(0,0);
-      vec arbitraryVec = new vec(-mouseY, -mouseY);
-      for (pts polygon : polygons) {
-        
-=======
       if (!mousePressed) {
         pt m = new pt(mouseX, mouseY);
         pt o = new pt(0,0);
@@ -116,7 +102,6 @@ void draw()      // executed at each frame
           }
         }
         println("Selected Polygon: " + selectedPolygon);
->>>>>>> a47600f1aaf98d12291b3d8dcb0d40f9e4c1769b
       }
     }
 

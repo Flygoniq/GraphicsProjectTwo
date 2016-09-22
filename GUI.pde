@@ -14,8 +14,8 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='*') ;    
     if(key=='(') ;
     if(key==')') ;  
-    if(key=='_') gameStage = -1;
-    if(key=='+') gameStage = 0;
+    if(key=='_') ;
+    if(key=='+') ;
 
     if(key=='`') filming=!filming;  // filming on/off capture frames into folder IMAGES/MOVIE_FRAMES_TIF/
     if(key=='1') gameStage = 1;               // toggles what should be displayed at each fram
@@ -28,8 +28,8 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='8') ;
     if(key=='9') ;
     if(key=='0') ; 
-    if(key=='-') ;
-    if(key=='=') ;
+    if(key=='-') gameStage = -1;
+    if(key=='=') gameStage = 0;
 
     if(key=='a') ; 
     if(key=='b') ; 
