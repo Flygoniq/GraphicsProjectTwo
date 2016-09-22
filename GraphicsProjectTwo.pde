@@ -76,20 +76,10 @@ void draw()      // executed at each frame
         pen(red,5);
         arrow(A,B);
       } else {
-        //cuttablePolygon.split(A, B);
         pen(green,5);
         arrow(A,B);
       }
     }
-<<<<<<< HEAD
-    if (cuttablePolygon == null) {
-      pen(red,5);
-      arrow(A,B);
-    } else {
-      pen(green,5);
-      arrow(A,B);
-    }
-=======
     
     if (gameStage == 1) {
       pt m = new pt(mouseX, mouseY);
@@ -99,8 +89,6 @@ void draw()      // executed at each frame
         
       }
     }
-    
->>>>>>> origin/master
 
   if(recordingPDF) endRecordingPDF();  // end saving a .pdf file with the image of the canvas
 
