@@ -121,7 +121,11 @@ class pts
         }
       }
     }
+<<<<<<< HEAD
     return new pts[] {poly, poly2};
+=======
+    //this = poly2;
+>>>>>>> origin/master
   }
 
 
