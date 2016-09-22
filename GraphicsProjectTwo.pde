@@ -23,6 +23,7 @@ int index = 0;
 int size = 0;
 int solved = 0;
 pts ghost = null;
+pt o = new pt(0,0);
 int gameStage = -1; //-1 = make shape, 0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
 //**************************** initialization ****************************
 void setup()               // executed once at the begining 
@@ -120,7 +121,6 @@ void draw()      // executed at each frame
         //polygons[i].IDs();
       }
       if (!mousePressed) {
-        pt o = new pt(0,0);
         selectedPolygon = null;
         for (int i = 0; i < size; i++) {
           if (polygons[i].countStabs(Mouse(), o) % 2 == 1) {
@@ -177,7 +177,7 @@ public void TranslateMode() {
   if (gameStage == -1) {
     gameStage = 0;
     cp5.get(Bang.class, "TranslateMode").setLabel("To Translate Mode");
-    ghost = polygons[0];
+    ghost = new pts(polygons[0]);
   } else if (gameStage == 0) {
     gameStage = 1;
     cp5.get(Bang.class, "TranslateMode").setLabel("To Cutting Mode");
@@ -204,13 +204,13 @@ public void Play() {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (!(i == j)) {
-        if (polygons[i].touchytouchy(polygons[j])) {
+        if (polygons[i].checkOverlap(polygons[j])) {
           println("Collisions between polygons detected!");
           return;
         }
       }
     }
-    if (ghost.touchytouchy(polygons[i])) {
+    if (ghost.checkOverlap(polygons[i])) {
       println("Collisions between background and polygons detected!");
       return;
     }

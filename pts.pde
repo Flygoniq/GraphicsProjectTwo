@@ -166,7 +166,11 @@ class pts
     return new pts[] {poly, poly2};
   }
   
-  boolean touchytouchy(pts poly) {
+  boolean checkOverlap(pts poly) {
+    return edgeIntersect(poly) || insidePoly(poly);
+  }
+  
+  boolean edgeIntersect(pts poly) {
     for (int i = 1; i < nv - 1; i++) {
       float px = G[i - 1].x;
       float py = G[i - 1].y;
@@ -188,6 +192,20 @@ class pts
     return false;
   }
 
+  boolean insidePoly(pts poly) {
+    for (int i = 0; i < poly.nv - 1; i++) {
+      if (this.countStabs(poly.G[i], o) % 2 == 1) {
+        return true;
+      }
+    }
+    for (int j = 0; j < nv - 1; j++) {
+      if (poly.countStabs(G[j], o) % 2 == 1) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
   // PICK AND EDIT INDIVIDUAL POINT
   
   void pickClosest(pt M) 
