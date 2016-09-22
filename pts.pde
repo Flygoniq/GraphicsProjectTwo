@@ -129,7 +129,6 @@ class pts
         }
       }
     }
-
     return new pts[] {poly, poly2};
 
   }

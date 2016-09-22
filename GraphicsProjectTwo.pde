@@ -77,18 +77,9 @@ void draw()      // executed at each frame
         pen(red,5);
         arrow(A,B);
       } else {
-        //cuttablePolygon.split(A, B);
         pen(green,5);
         arrow(A,B);
       }
-    }
-
-    if (cuttablePolygon == null) {
-      pen(red,5);
-      arrow(A,B);
-    } else {
-      pen(green,5);
-      arrow(A,B);
     }
     
     if (gameStage == 1) {
