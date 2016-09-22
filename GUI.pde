@@ -133,48 +133,72 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     }
 
 void mousePressed()   // executed when the mouse is pressed
-  {
+{
   if (!keyPressed || (key=='a') || (key=='i') || (key=='x'))  
   //polygons[0].pickClosest(Mouse()); // pick vertex closest to mouse: sets pv ("picked vertex") in pts
   pickClosestPoint();
-  if (keyPressed) 
+  if (gameStage == -1 && keyPressed) 
      {
      if (key=='a')  polygons[0].addPt(Mouse()); // appends vertex after the last one
      if (key=='i')  polygons[0].insertClosestProjection(Mouse()); // inserts vertex at closest projection of mouse
      if (key=='d')  polygons[0].deletePickedPt(); // deletes vertex closeset to mouse
      }
-  if (keyPressed && key=='s') {A=Mouse(); B=Mouse();} 
-    change=true;
+  if (gameStage == 0 && keyPressed && key=='s') {A=Mouse(); B=Mouse();}
+  if (gameStage == 2) {
+    pt o = new pt(0,0);
+    for (int i = 0; i < size; i++) {
+      if (polygons[i].countStabs(Mouse(), o) % 2 == 1) {
+        selectedPolygon = polygons[i];
+        selectedPolygonIndex = i;
+        break;
+      }
+    }
+    if (selectedPolygon != null) {
+      for (int i = 0; i < size; i++) {
+        if (secretPolygons[i].countStabs(Mouse(), o) % 2 == 1) {
+          selectedSecretPolygon = secretPolygons[i];
+          if (i == selectedPolygonIndex && selectedPolygon.drawn == true) {
+            t = 0;
+            lerping = true;
+            selectedPolygon.drawn = false;
+          }
+          break;
+        }
+      }
+    }
   }
+    change=true;
+}
 
 void mouseReleased()   // executed when the mouse is pressed
   {
-  if (keyPressed && key=='s') B=Mouse(); 
+  if (gameStage == 0 && keyPressed && key=='s') B=Mouse(); 
   change=true;    
   }
 
 void mouseDragged() // executed when the mouse is dragged (while mouse buttom pressed)
   {
-  if (!keyPressed || (key=='a')|| (key=='i')) dragPicked();   // drag selected point with mouse
-  if (keyPressed) {
-      if (key=='.') f+=2.*float(mouseX-pmouseX)/width;  // adjust current frame   
+  if (gameStage == -1 && !keyPressed || (key=='a') || (key=='i')) dragPicked();   // drag selected point with mouse
+  if (keyPressed && gameStage == 1 && selectedPolygon != null) {
+      //if (key=='.') f+=2.*float(mouseX-pmouseX)/width;  // adjust current frame   
       if (key=='t') selectedPolygon.dragAll(); // move all vertices
       if (key=='r') selectedPolygon.rotateAllAroundCentroid(Mouse(),Pmouse()); // turn all vertices around their center of mass
       if (key=='z') selectedPolygon.scaleAllAroundCentroid(Mouse(),Pmouse()); // scale all vertices with respect to their center of mass
       }
-  if (keyPressed && key=='s') B=Mouse(); 
+  if (gameStage == 0 && keyPressed && key=='s') B=Mouse(); 
   change=true;
   }  
 
 void mouseWheel(MouseEvent event) { // reads mouse wheel and uses to zoom
+  if (gameStage != 1) return;
   float s = event.getAmount();
   selectedPolygon.scaleAllAroundCentroid(s/100);
   change=true;
   }
 
 //**************************** text for name, title and help  ****************************
-String title ="Split Polygon Puzzle",            name ="Student: First LAST",
-       subtitle = "  base code for P2 for Jarek Rossignac's CS3451 class in the Fall 2016",
+String title ="Split Polygon Puzzle",            name ="Student: Alan Jiang, Janet Liang",
+       subtitle = "",
        
        menu="?:(show/hide) help, ~/!/@:snap pdf/jpg/fif, `:(start/stop) recording, S/L:save/load, Q:quit",
        guide="click&drag:edit, d&click:delete, i&click&drag:insrt, s&click&drag:split"; // help info

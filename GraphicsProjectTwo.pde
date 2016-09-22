@@ -8,10 +8,12 @@ import controlP5.*;
 ControlP5 cp5;
 
 pts[] polygons;// class containing array of points, used to standardize GUI
-pts cuttablePolygon, selectedPolygon; //polygon that can currently be legally cut by the green arrow.
+pts[] secretPolygons;
+pts cuttablePolygon, selectedPolygon, selectedSecretPolygon; //polygon that can currently be legally cut by the green arrow.
+int selectedPolygonIndex;
 floatptPair[] goodTs;  //t parameters for points on currently cuttable polygon.
 float t=0, f=0;
-boolean animate=true, fill=false, timing=false;
+boolean animate=true, fill=false, timing=false, lerping = false;
 boolean lerp=true, slerp=true, spiral=true; // toggles to display vector interpoations
 int ms=0, me=0; // milli seconds start and end for timing
 int npts=20000; // number of points
@@ -39,9 +41,16 @@ void setup()               // executed once at the begining
   //controlP5 buttons
   noStroke();
   cp5.addBang("TranslateMode")
-       .setPosition(1100, 700)
-       .setSize(80, 30)
-       .setLabel("Translate Mode")
+       .setPosition(1080, 700)
+       .setSize(100, 30)
+       .setLabel("To Cutting Mode")
+       .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+       ;
+  cp5.addBang("Play")
+       .setPosition(1080, 750)
+       .setSize(100, 30)
+       .setLabel("Play!")
+       .hide()
        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
        ;
   
@@ -62,10 +71,15 @@ void draw()      // executed at each frame
         polygons[i].drawCurve();
         polygons[i].IDs();
       }
-      ghost = polygons[0];
     }
     
     if (gameStage == 0) { //code for the cutting part goes in here.
+      pen(black,3);
+      for (int i = 0; i < size; i++) {
+        fill(yellow);
+        polygons[i].drawCurve();
+        //polygons[i].IDs();
+      }
       cuttablePolygon = null;
       goodTs = null;
       stroke(red);
@@ -91,24 +105,44 @@ void draw()      // executed at each frame
     if (gameStage == 1) {
       fill(118, 118, 118);
       ghost.drawCurve();
+      pen(black,3);
+      for (int i = 0; i < size; i++) {
+        fill(yellow);
+        polygons[i].drawCurve();
+        //polygons[i].IDs();
+      }
       if (!mousePressed) {
-        pt m = new pt(mouseX, mouseY);
         pt o = new pt(0,0);
-        //vec arbitraryVec = new vec(-mouseY, -mouseY);
         selectedPolygon = null;
         for (int i = 0; i < size; i++) {
-          if (polygons[i].countStabs(m, o) % 2 == 1) {
+          if (polygons[i].countStabs(Mouse(), o) % 2 == 1) {
             selectedPolygon = polygons[i];
             break;
           }
         }
-        println("Selected Polygon: " + selectedPolygon);
       }
     }
     
     if (gameStage == 2) {
       fill(118, 118, 118);
       ghost.drawCurve();
+      pen(black,3);
+      for (int i = 0; i < size; i++) {
+        fill(yellow);
+        polygons[i].drawCurve();
+        //polygons[i].IDs();
+      }
+      if (!lerping) {
+        if (selectedPolygon != null) show(selectedPolygon.Centroid(), 10);
+      } else {
+        t += .05;
+        selectedPolygon.drawLerp(selectedSecretPolygon, t);
+        if (t >= 1) {
+          lerping = false;
+        }
+      }
+      
+      
       
     }
 
@@ -125,11 +159,28 @@ void draw()      // executed at each frame
   
   
 public void TranslateMode() {
-  if (gameStage == 0) {
+  if (gameStage == -1) {
+    gameStage = 0;
+    cp5.get(Bang.class, "TranslateMode").setLabel("To Translate Mode");
+    ghost = polygons[0];
+  } else if (gameStage == 0) {
     gameStage = 1;
-    cp5.get(Bang.class, "TranslateMode").setLabel("Cutting Mode");
+    cp5.get(Bang.class, "TranslateMode").setLabel("To Cutting Mode");
+    secretPolygons = new pts[20];
+    for (int i = 0; i < size; i++) {
+      secretPolygons[i] = polygons[i];
+    }
+    cp5.getController("Play").show();
   } else if (gameStage == 1) {
     gameStage = 0;
-    cp5.get(Bang.class, "TranslateMode").setLabel("Translate Mode");
+    cp5.get(Bang.class, "TranslateMode").setLabel("To Translate Mode");
+    cp5.getController("Play").hide();
   }
+}
+
+public void Play() {
+  gameStage = 2;
+  selectedPolygon = null;
+  cp5.getController("TranslateMode").hide();
+  cp5.getController("Play").hide();
 }

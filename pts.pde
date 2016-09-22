@@ -11,6 +11,7 @@ class pts
   int iv = 0;                              // insertion index 
   int maxnv = 100*2*2;//*2*2*2*2*2*2;         //  max number of vertices
   Boolean loop=true;                       // is a closed loop
+  Boolean drawn = true;
 
   pt[] G = new pt [maxnv];                 // geometry table (vertices)
 
@@ -78,7 +79,7 @@ class pts
     
     for (int i = 0; i < nv; i++) {
       if (LineStabsEdge(A, B, G[i], G[next(i)])) {
-        pen(red, 4); edge(G[i], G[next(i)]);
+        //pen(red, 4); edge(G[i], G[next(i)]);
         Ts.add(intersectionParameter(A, V(A, B), G[i], G[next(i)]), G[i]);
         //pt X = P(A, t, V);
         //pen(red, 2); show(X, 5);
@@ -86,10 +87,10 @@ class pts
     }
     try {
       goodTs = Ts.getTs();
-      for (floatptPair f : goodTs) {
+      /*for (floatptPair f : goodTs) {
         pt X = P(A, f.f, V(A, B));
         pen(red, 2); show(X, 5);
-      }
+      }*/
       cuttablePolygon = this;
       return true;
     } catch (NoSuchElementException e) {
@@ -97,6 +98,19 @@ class pts
       goodTs = null;
       return false;
     }
+  }
+  
+  void drawLerp(pts destination, float t) {
+    println("Triggered");
+    pen(black, 2);
+    beginShape();
+    for (int i = 0; i < nv; i++) {
+      float a = spiralAngle(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
+      float m = spiralScale(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
+      pt F = spiralCenter(a,m,G[i],destination.G[i]);
+      edge(spiralPt(A,F,m,a,t),spiralPt(B,F,m,a,t));
+    }
+    endShape();
   }
   
   pts[] split(pt A, pt B) {
@@ -202,6 +216,9 @@ class pts
    
   void drawCurve() 
     {
+      if (!drawn) {
+        return;
+      }
     //if(loop)
     drawClosedCurve();
     //else drawOpenCurve(); 
