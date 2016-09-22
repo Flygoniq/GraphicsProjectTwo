@@ -18,18 +18,18 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='+') ;
 
     if(key=='`') filming=!filming;  // filming on/off capture frames into folder IMAGES/MOVIE_FRAMES_TIF/
-    if(key=='1') gameStage = 1;               // toggles what should be displayed at each fram
-    if(key=='2') gameStage = 2;
+    if(key=='1') ;               // toggles what should be displayed at each fram
+    if(key=='2') ;
     if(key=='3') ;
     if(key=='4') ;
     if(key=='5') ;
     if(key=='6') ;
-    if(key=='7') Play();
+    if(key=='7') ;
     if(key=='8') ;
     if(key=='9') ;
     if(key=='0') ; 
-    if(key=='-') gameStage = -1;
-    if(key=='=') gameStage = 0;
+    if(key=='-') ;
+    if(key=='=') ;
 
     if(key=='a') ; 
     if(key=='b') ; 
@@ -39,7 +39,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='f') ;
     if(key=='g') ; 
     if(key=='h') ;
-    if(key=='i') println("Size: " + polygons[2]); 
+    if(key=='i') ; 
     if(key=='j') ;
     if(key=='k' && gameStage == 0 && cuttablePolygon != null) {
       pts[] newPoly = cuttablePolygon.split(A, B);
@@ -124,11 +124,11 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
        if (keyCode == ALT) {pressed="ALT";   };
        if (keyCode == CONTROL) {pressed="CONTROL";   };
        if (keyCode == SHIFT) {pressed="SHIFT";   };
-       println("Pressed coded key = "+pressed); 
+       //println("Pressed coded key = "+pressed); 
        } 
   
     change=true; // to make sure that we save a movie frame each time something changes
-    println("key pressed = "+key);
+    //println("key pressed = "+key);
 
     }
 
@@ -155,14 +155,10 @@ void mousePressed()   // executed when the mouse is pressed
       }
     }
     if (selectedPolygon != null) {
-      println("triggered");
       for (int i = 0; i < size; i++) {
-        println("At least I'm trying");
         if (secretPolygons[i].countStabs(Mouse(), o) % 2 == 1) {
-          println("Inside a Secret Polygon!");
           selectedSecretPolygon = secretPolygons[i];
           if (i == selectedPolygonIndex && selectedPolygon.drawn == true) {
-            println("Match Found!");
             t = 0;
             lerping = true;
             selectedPolygon.drawn = false;

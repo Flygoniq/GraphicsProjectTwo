@@ -146,7 +146,6 @@ void draw()      // executed at each frame
       } else {
         t += .05;
         selectedPolygon.drawLerp(selectedSecretPolygon, t);
-        println("T: " + t);
         if (t >= 1) {
           lerping = false;
           selectedSecretPolygon.drawn = true;
@@ -177,7 +176,7 @@ public void TranslateMode() {
   if (gameStage == -1) {
     gameStage = 0;
     cp5.get(Bang.class, "TranslateMode").setLabel("To Translate Mode");
-    ghost = polygons[0];
+    ghost = new pts(polygons[0]);
   } else if (gameStage == 0) {
     gameStage = 1;
     cp5.get(Bang.class, "TranslateMode").setLabel("To Cutting Mode");
@@ -191,7 +190,6 @@ public void TranslateMode() {
       secretPolygons[i] = new pts(polygons[i]);
       secretPolygons[i].drawn = false;
     }
-    println("Making secret Polygons");
     cp5.getController("Play").show();
   } else if (gameStage == 1) {
     gameStage = 0;
@@ -205,17 +203,14 @@ public void Play() {
     for (int j = 0; j < size; j++) {
       if (!(i == j)) {
         if (polygons[i].touchytouchy(polygons[j])) {
-          println("Collisions between polygons detected!");
           return;
         }
       }
     }
     if (ghost.touchytouchy(polygons[i])) {
-      println("Collisions between background and polygons detected!");
       return;
     }
   }
-  println('a');
   gameStage = 2;
   selectedPolygon = null;
   cp5.getController("TranslateMode").hide();

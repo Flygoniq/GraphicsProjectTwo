@@ -115,14 +115,33 @@ class pts
   void drawLerp(pts destination, float t) {
     pen(black, 2);
     fill(yellow);
+    pts temp = new pts();
+    temp.declare();
     beginShape();
     for (int i = 0; i < nv; i++) {
       float a = spiralAngle(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
       float m = spiralScale(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
+      println("m = " + m);
       pt F = spiralCenter(a,m,G[i],destination.G[i]);
-      edge(spiralPt(G[i],F,m,a,t),spiralPt(G[next(i)],F,m,a,t));
+      pt pointone;
+      if (m < 1.0001 && m > .99999) {
+        pointone = lerp(G[i], destination.G[i], t);
+        edge(pointone, lerp(G[next(i)], destination.G[next(i)],t));
+      } else {
+        pointone = spiralPt(G[i],F,m,a,t);
+        edge(pointone,spiralPt(G[next(i)],F,m,a,t));
+      }
+      temp.addPt(pointone);
     }
     endShape();
+    for (int i = 0; i < size; i++) {
+      if (polygons[i].drawn && temp.touchytouchy(polygons[i])) {
+        lerping = false;
+        selectedPolygon.drawn = true;
+        selectedPolygon = null;
+        selectedSecretPolygon = null;
+      }
+    }
   }
   
   pts[] split(pt A, pt B) {
@@ -417,11 +436,10 @@ class pts
 
   void loadPts(String fn) 
     {
-    println("loading: "+fn); 
     String [] ss = loadStrings(fn);
     String subpts;
     int s=0;   int comma, comma1, comma2;   float x, y;   int a, b, c;
-    nv = int(ss[s++]); print("nv="+nv);
+    nv = int(ss[s++]);
     for(int k=0; k<nv; k++) {
       int i=k+s; 
       comma=ss[i].indexOf(',');   

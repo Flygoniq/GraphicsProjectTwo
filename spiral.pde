@@ -84,3 +84,9 @@ vec slerp(vec U, float t, vec V)
   return W(b/d,U,c/d,V); 
   }
   
+pt lerp(pt a, pt b, float time) {
+  //println(time);
+  float x = a.x + ((b.x - a.x) * time);
+  float y = a.y + ((b.y - a.y) * time);
+  return new pt(x, y);
+}
