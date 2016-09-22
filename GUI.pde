@@ -49,7 +49,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='p') ;
     if(key=='q') ; 
     if(key=='r') ; // used in mouseDrag to rotate the control points 
-    if(key=='s') ;
+    if(key=='s') cuttablePolygon.split(A, B);
     if(key=='t') ; // used in mouseDrag to translate the control points 
     if(key=='p') ;
     if(key=='v') ; 

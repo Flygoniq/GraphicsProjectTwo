@@ -23,7 +23,7 @@ class pts
 
   void empty() {nv=0; pv=0; }                                                 // empties this object
   
-  void addPt(pt P) { G[nv].setTo(P); pv=nv; nv++;  }                    // appends a point at position P
+  void addPt(pt P) { G[nv].setTo(P); pv=nv; nv++;  }                  // appends a point at position P
   
   void addPt(float x,float y) { G[nv].x=x; G[nv].y=y; pv=nv; nv++; }    // appends a point at position (x,y)
   
@@ -60,6 +60,10 @@ class pts
   //Operate on Polygon
   int next(int v) {return (v+1) % nv;}
   int prev(int v) {return (v + nv - 1) % nv;}
+  
+  int countStabs(pt A, pt B) {
+    return 0;
+  }
   
   boolean checkStabs(pt A, pt B) {
     TContainer Ts = new TContainer();
@@ -121,11 +125,11 @@ class pts
         }
       }
     }
-<<<<<<< HEAD
+
     return new pts[] {poly, poly2};
-=======
+
     //this = poly2;
->>>>>>> origin/master
+
   }
 
 
