@@ -1,17 +1,11 @@
 # GraphicsProjectTwo
 
-##Designer mode
-* Make cuts.  Open request to cut:
- * Check if the cutter line is legal (is at least partially inside the shape and only makes a single legal cut)
- * Find the points to cut at.
- * Divide the polygon being cut into two more polygons.
- * We need to keep track of shared edges somehow.
- * We're gonna need a way to select the closest edge.  Heuristic for this? Only check edges linked to the closest point perhaps?
-* Move shapes out of starting area.
- * Maintain a ghost image of the original starting area as a polygon.
- * Allow polygons to be translated, rotated, and scaled.  Do not allow them to be overlapping the starting area or each other when save is attempted.
-* Save changes.
- * As a bunch of polygons; their shared edge information needs to be saved as well.
+## Dependencies
+* In order to run this project, it is necessary to install ControlP5 through processing.  Go to Tools>Add Tool>Libraries, search ControlP5 in the filter, and install.
 
-##Player mode
-* Click shared edges to move pieces into the start.  They will attempt to go there in a logarithmic spiral motion.  Return if wrong place or collide with an unplaced piece.  Correctly placed pieces should be immune to collision.
+The project opens into base polygon editing mode.  Here you can add, delete, and move points to create the base polygon.  Buttons help guide the user through the stages.
+The next mode is cutting.  Here the designer cuts the polygon into pieces.  The old paradigm of holding s and dragging the mouse is used to create the arrow.  To make a cut, press k once.  Repeat until satisfied, then go to the next mode.
+In translate mode, the designer moves cut pieces out of the base polygon so that none are overlapping each other or the base polygon.  The base controls, where t+drag = translate, r+drag = rotate, and mousewheel = scale remain.
+Finally, in translate mode, a play button appears. Hitting the play button moves to player mode.  As the player, select polygons outside the base and click where it should go inside the base in order to attempt to move it there.  The polygon will stop and go back if it collides with any unplaced polygons, but placed polygons do not cause collisions (in order to prevent making life very hard for the designer).
+
+A note: If the piece was removed from the center during translate mode and little to no rotation was applied, the piece will choose to LERP back to the center to be placed.  Otherwise, it will use a logarithmic spiral movement.
