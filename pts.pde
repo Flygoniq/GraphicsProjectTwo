@@ -116,7 +116,7 @@ class pts
         poly2.addPt(G[i]);
       }
     }
-    this = poly2;
+    //this = poly2;
   }
 
 

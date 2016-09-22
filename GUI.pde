@@ -33,7 +33,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
 
     if(key=='a') ; 
     if(key=='b') ; 
-    if(key=='c') polygons[0].resetOnCircle(polygons[0].nv);
+    if(key=='c') ;//polygons[0].resetOnCircle(polygons[0].nv);
     if(key=='d') ; 
     if(key=='e') ;
     if(key=='f') ;
