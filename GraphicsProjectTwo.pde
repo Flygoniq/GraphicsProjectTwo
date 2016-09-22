@@ -87,6 +87,7 @@ void draw()      // executed at each frame
         arrow(A,B);
       }
     }
+    
     if (gameStage == 1) {
       fill(118, 118, 118);
       ghost.drawCurve();
@@ -103,6 +104,12 @@ void draw()      // executed at each frame
         }
         println("Selected Polygon: " + selectedPolygon);
       }
+    }
+    
+    if (gameStage == 2) {
+      fill(118, 118, 118);
+      ghost.drawCurve();
+      
     }
 
   if(recordingPDF) endRecordingPDF();  // end saving a .pdf file with the image of the canvas
