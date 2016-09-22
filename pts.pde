@@ -91,7 +91,9 @@ class pts
     pts poly2 = new pts();
     boolean flag = false;
     pt temp1 = P(A, goodTs[0].f, V(A, B));
+    print(temp1);
     pt temp2 = P(A, goodTs[1].f, V(A, B));
+    print(temp2);
     for (int i = 0; i < nv; i++) {
       poly2.addPt(G[i]);
       if (isSame(G[i], goodTs[0].p)) {
