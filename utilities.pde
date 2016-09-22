@@ -73,7 +73,7 @@ void displayFooter()  // Displays help text at the bottom
     
 
 void pickClosestPoint() {
-  for (int i = 0; i < polyCount; i++) {
+  for (int i = 0; i < size; i++) {
     for (int j = 0; j < polygons[i].nv; j++) {
       if (d(Mouse(), polygons[i].G[j]) < d(Mouse(), closestPoint)) {
         closestPoint = polygons[i].G[j];
