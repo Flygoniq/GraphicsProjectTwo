@@ -46,7 +46,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
       polygons[index] = newPoly[0];
       polygons[size] = newPoly[1];
       size++;
-      };   
+      };
     if(key=='l') ;
     if(key=='m') ;
     if(key=='n') ;
