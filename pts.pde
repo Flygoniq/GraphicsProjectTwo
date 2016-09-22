@@ -107,13 +107,14 @@ class pts
         } else if (step2) {
           poly.addPt(G[i]);
           if (isSame(G[i], goodTs[0].p)) {
-            poly2.addPt(temp2);
+            poly2.addPt(temp1);
             step3 = true;
           } else if (isSame(G[i], goodTs[1].p)) {
-            poly2.addPt(temp1);
+            poly2.addPt(temp2);
             step3 = true;
           }
         } else {
+          poly2.addPt(G[i]);
           if (isSame(G[i], goodTs[0].p)) {
               poly2.addPt(temp1);
               poly.addPt(temp2);
@@ -128,15 +129,9 @@ class pts
         }
       }
     }
-<<<<<<< HEAD
-    return new pts[] {poly, poly2};
-=======
 
     return new pts[] {poly, poly2};
 
-    //this = poly2;
-
->>>>>>> origin/master
   }
 
 

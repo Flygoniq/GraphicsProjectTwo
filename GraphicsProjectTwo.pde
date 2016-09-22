@@ -16,7 +16,7 @@ boolean animate=true, fill=false, timing=false;
 boolean lerp=true, slerp=true, spiral=true; // toggles to display vector interpoations
 int ms=0, me=0; // milli seconds start and end for timing
 int npts=20000; // number of points
-pt A=P(200,100), B=P(500,300);
+pt A=P(200,100), B=P(500,300), closestPoint;
 int index = 0;
 int size = 0;
 int gameStage = 0; //0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
@@ -34,6 +34,7 @@ void setup()               // executed once at the begining
   // P.resetOnCircle(4); // sets P to have 4 points and places them in a circle on the canvas
   polygons[0].loadPts("data/pts");  // loads points form file saved with this program
   size++;
+  closestPoint = new pt(0, 0);
   //controlP5 buttons
   noStroke();
   cp5.addBang("TranslateMode")
@@ -81,7 +82,7 @@ void draw()      // executed at each frame
         arrow(A,B);
       }
     }
-<<<<<<< HEAD
+
     if (cuttablePolygon == null) {
       pen(red,5);
       arrow(A,B);
@@ -89,7 +90,6 @@ void draw()      // executed at each frame
       pen(green,5);
       arrow(A,B);
     }
-=======
     
     if (gameStage == 1) {
       pt m = new pt(mouseX, mouseY);
@@ -99,8 +99,6 @@ void draw()      // executed at each frame
         
       }
     }
-    
->>>>>>> origin/master
 
   if(recordingPDF) endRecordingPDF();  // end saving a .pdf file with the image of the canvas
 

@@ -54,7 +54,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='p') ;
     if(key=='q') ; 
     if(key=='r') ; // used in mouseDrag to rotate the control points 
-    if(key=='s') cuttablePolygon.split(A, B);
+    if(key=='s') ;
     if(key=='t') ; // used in mouseDrag to translate the control points 
     if(key=='p') ;
     if(key=='v') ; 
@@ -135,15 +135,16 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
 void mousePressed()   // executed when the mouse is pressed
   {
   if (!keyPressed || (key=='a') || (key=='i') || (key=='x'))  
-  polygons[0].pickClosest(Mouse()); // pick vertex closest to mouse: sets pv ("picked vertex") in pts
+  //polygons[0].pickClosest(Mouse()); // pick vertex closest to mouse: sets pv ("picked vertex") in pts
+  pickClosestPoint();
   if (keyPressed) 
      {
      if (key=='a')  polygons[0].addPt(Mouse()); // appends vertex after the last one
      if (key=='i')  polygons[0].insertClosestProjection(Mouse()); // inserts vertex at closest projection of mouse
      if (key=='d')  polygons[0].deletePickedPt(); // deletes vertex closeset to mouse
-     } 
+     }
   if (keyPressed && key=='s') {A=Mouse(); B=Mouse();} 
-  change=true;
+    change=true;
   }
 
 void mouseReleased()   // executed when the mouse is pressed
@@ -154,7 +155,7 @@ void mouseReleased()   // executed when the mouse is pressed
 
 void mouseDragged() // executed when the mouse is dragged (while mouse buttom pressed)
   {
-  if (!keyPressed || (key=='a')|| (key=='i')) polygons[0].dragPicked();   // drag selected point with mouse
+  if (!keyPressed || (key=='a')|| (key=='i')) dragPicked();   // drag selected point with mouse
   if (keyPressed) {
       if (key=='.') f+=2.*float(mouseX-pmouseX)/width;  // adjust current frame   
       if (key=='t') polygons[0].dragAll(); // move all vertices
