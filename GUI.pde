@@ -41,7 +41,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
     if(key=='h') ;
     if(key=='i') println("Size: " + polygons[2]); 
     if(key=='j') ;
-    if(key=='k' && gameStage == 0) {
+    if(key=='k' && gameStage == 0 && cuttablePolygon != null) {
       pts[] newPoly = cuttablePolygon.split(A, B);
       polygons[index] = newPoly[0];
       polygons[size] = newPoly[1];
@@ -150,14 +150,19 @@ void mousePressed()   // executed when the mouse is pressed
       if (polygons[i].countStabs(Mouse(), o) % 2 == 1) {
         selectedPolygon = polygons[i];
         selectedPolygonIndex = i;
-        break;
+        change = true;
+        return;
       }
     }
     if (selectedPolygon != null) {
+      println("triggered");
       for (int i = 0; i < size; i++) {
+        println("At least I'm trying");
         if (secretPolygons[i].countStabs(Mouse(), o) % 2 == 1) {
+          println("Inside a Secret Polygon!");
           selectedSecretPolygon = secretPolygons[i];
           if (i == selectedPolygonIndex && selectedPolygon.drawn == true) {
+            println("Match Found!");
             t = 0;
             lerping = true;
             selectedPolygon.drawn = false;

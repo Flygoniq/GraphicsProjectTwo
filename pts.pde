@@ -20,6 +20,18 @@ class pts
 
   pts() {}
   
+  pts(pts another) {
+    this.nv = another.nv;
+    this.pv = another.pv;
+    this.iv = another.iv;
+    this.maxnv = another.maxnv;
+    this.loop = true;
+    this.drawn = true;
+    for (int i = 0; i < maxnv; i++) {
+      G[i] = new pt(another.G[i]);
+    }
+  }
+  
   void declare() {for (int i=0; i<maxnv; i++) G[i]=P(); }               // creates all points, MUST BE DONE AT INITALIZATION
 
   void empty() {nv=0; pv=0; }                                                 // empties this object
@@ -101,14 +113,14 @@ class pts
   }
   
   void drawLerp(pts destination, float t) {
-    println("Triggered");
     pen(black, 2);
+    fill(yellow);
     beginShape();
     for (int i = 0; i < nv; i++) {
       float a = spiralAngle(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
       float m = spiralScale(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
       pt F = spiralCenter(a,m,G[i],destination.G[i]);
-      edge(spiralPt(A,F,m,a,t),spiralPt(B,F,m,a,t));
+      edge(spiralPt(G[i],F,m,a,t),spiralPt(G[next(i)],F,m,a,t));
     }
     endShape();
   }

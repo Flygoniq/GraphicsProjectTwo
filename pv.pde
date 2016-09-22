@@ -14,6 +14,10 @@ class pt
   
   // CREATE
   pt () {}
+  pt (pt another) {
+    x = another.x;
+    y = another.y;
+  }
   pt (float px, float py) {x = px; y = py;};
 
   // MODIFY

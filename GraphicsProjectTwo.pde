@@ -2,6 +2,7 @@
 // Author: Jarek ROSSIGNAC
 import processing.pdf.*;    // to save screen shots as PDFs, does not always work: accuracy problems, stops drawing or messes up some curves !!!
 import java.util.NoSuchElementException;
+import java.util.Arrays;
 
 //**************************** global variables ****************************
 import controlP5.*;
@@ -20,6 +21,7 @@ int npts=20000; // number of points
 pt A=P(200,100), B=P(500,300), closestPoint;
 int index = 0;
 int size = 0;
+int solved = 0;
 pts ghost = null;
 int gameStage = -1; //-1 = make shape, 0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
 //**************************** initialization ****************************
@@ -39,7 +41,6 @@ void setup()               // executed once at the begining
   closestPoint = new pt(0, 0);
   selectedPolygon = polygons[0];
   //controlP5 buttons
-  noStroke();
   cp5.addBang("TranslateMode")
        .setPosition(1080, 700)
        .setSize(100, 30)
@@ -53,6 +54,13 @@ void setup()               // executed once at the begining
        .hide()
        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
        ;
+  cp5.addTextlabel("Victory")
+     .setText("You Win! Congratulations!")
+     .setPosition(550, 50)
+     .setColorValue(0x00000000)
+     .setFont(createFont("Georgia",20))
+     .hide()
+     ;
   
   } // end of setup
 
@@ -130,15 +138,22 @@ void draw()      // executed at each frame
       for (int i = 0; i < size; i++) {
         fill(yellow);
         polygons[i].drawCurve();
+        secretPolygons[i].drawCurve();
         //polygons[i].IDs();
       }
       if (!lerping) {
-        if (selectedPolygon != null) show(selectedPolygon.Centroid(), 10);
+        if (selectedPolygon != null && selectedPolygon.drawn) show(selectedPolygon.Centroid(), 10);
       } else {
         t += .05;
         selectedPolygon.drawLerp(selectedSecretPolygon, t);
+        println("T: " + t);
         if (t >= 1) {
           lerping = false;
+          selectedSecretPolygon.drawn = true;
+          solved++;
+          if(solved == size) {
+            cp5.getController("Victory").show();
+          }
         }
       }
       
@@ -167,9 +182,16 @@ public void TranslateMode() {
     gameStage = 1;
     cp5.get(Bang.class, "TranslateMode").setLabel("To Cutting Mode");
     secretPolygons = new pts[20];
-    for (int i = 0; i < size; i++) {
+    /*for (int i = 0; i < size; i++) {
       secretPolygons[i] = polygons[i];
+    }*/
+    //secretPolygons = Arrays.copyOf(polygons, polygons.length);
+    //secretPolygons = polygons.clone();
+    for (int i = 0; i < size; i++) {
+      secretPolygons[i] = new pts(polygons[i]);
+      secretPolygons[i].drawn = false;
     }
+    println("Making secret Polygons");
     cp5.getController("Play").show();
   } else if (gameStage == 1) {
     gameStage = 0;
