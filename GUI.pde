@@ -134,6 +134,7 @@ void keyPressed()  // executed each time a key is pressed: sets the Boolean "key
 
 void mousePressed()   // executed when the mouse is pressed
 {
+  if (lerping) return;
   if (!keyPressed || (key=='a') || (key=='i') || (key=='x'))  
   //polygons[0].pickClosest(Mouse()); // pick vertex closest to mouse: sets pv ("picked vertex") in pts
   pickClosestPoint();

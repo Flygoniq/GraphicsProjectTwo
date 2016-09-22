@@ -202,12 +202,12 @@ public void Play() {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (!(i == j)) {
-        if (polygons[i].touchytouchy(polygons[j])) {
+        if (polygons[i].checkOverlap(polygons[j])) {
           return;
         }
       }
     }
-    if (ghost.touchytouchy(polygons[i])) {
+    if (ghost.checkOverlap(polygons[i])) {
       return;
     }
   }

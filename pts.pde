@@ -135,7 +135,7 @@ class pts
     }
     endShape();
     for (int i = 0; i < size; i++) {
-      if (polygons[i].drawn && temp.touchytouchy(polygons[i])) {
+      if (polygons[i].drawn && temp.edgeIntersect(polygons[i])) {
         lerping = false;
         selectedPolygon.drawn = true;
         selectedPolygon = null;
