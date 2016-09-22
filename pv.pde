@@ -37,7 +37,7 @@ class pt
   pt rotate(float a, pt G) {float dx=x-G.x, dy=y-G.y, c=cos(a), s=sin(a); x=G.x+c*dx+s*dy; y=G.y-s*dx+c*dy; return this;};   // P.rotate(a,G): rotate P around G by angle a in radians
   pt rotate(float s, float t, pt G) {float dx=x-G.x, dy=y-G.y; dx-=dy*t; dy+=dx*s; dx-=dy*t; x=G.x+dx; y=G.y+dy;  return this;};   // fast rotate s=sin(a); t=tan(a/2); 
   pt moveWithMouse() { x += mouseX-pmouseX; y += mouseY-pmouseY;  return this;}; 
-     
+
   // DRAW , WRITE
   pt write() {print("("+x+","+y+")"); return this;};  // writes point coordinates in text window
   pt v() {vertex(x,y); return this;};  // used for drawing polygons between beginShape(); and endShape();

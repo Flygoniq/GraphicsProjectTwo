@@ -121,7 +121,6 @@ class pts
     for (int i = 0; i < nv; i++) {
       float a = spiralAngle(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
       float m = spiralScale(G[i],G[next(i)],destination.G[i],destination.G[next(i)]);
-      println("m = " + m);
       pt F = spiralCenter(a,m,G[i],destination.G[i]);
       pt pointone;
       if (m < 1.0001 && m > .99999) {

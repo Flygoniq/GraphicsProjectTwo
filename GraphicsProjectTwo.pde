@@ -23,6 +23,7 @@ int index = 0;
 int size = 0;
 int solved = 0;
 pt o = new pt(0,0);
+Controller label;
 pts ghost = null;
 int gameStage = -1; //-1 = make shape, 0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
 //**************************** initialization ****************************
@@ -55,7 +56,7 @@ void setup()               // executed once at the begining
        .hide()
        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
        ;
-  cp5.addTextlabel("Victory")
+  label = cp5.addTextlabel("Victory")
      .setText("You Win! Congratulations!")
      .setPosition(550, 50)
      .setColorValue(0x00000000)
@@ -151,7 +152,8 @@ void draw()      // executed at each frame
           selectedSecretPolygon.drawn = true;
           solved++;
           if(solved == size) {
-            cp5.getController("Victory").show();
+            cp5.get(Textlabel.class, "Victory").setText("You Win! Congratulations!");
+            label.show();
           }
         }
       }
@@ -203,11 +205,17 @@ public void Play() {
     for (int j = 0; j < size; j++) {
       if (!(i == j)) {
         if (polygons[i].checkOverlap(polygons[j])) {
+          cp5.get(Textlabel.class, "Victory").setText("Cannot continue with overlaps!");
+          label.show();
+          println("Cannot continue with overlaps!");
           return;
         }
       }
     }
     if (ghost.checkOverlap(polygons[i])) {
+      cp5.get(Textlabel.class, "Victory").setText("Cannot continue with overlaps!");
+      label.show();
+      println("Cannot continue with overlaps!");
       return;
     }
   }
