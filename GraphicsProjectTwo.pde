@@ -19,7 +19,8 @@ int npts=20000; // number of points
 pt A=P(200,100), B=P(500,300), closestPoint;
 int index = 0;
 int size = 0;
-int gameStage = 0; //0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
+pts ghost = null;
+int gameStage = 0; //-1 = make shape, 0 = designer cutting stage, 1 = designer moving polygons, 2 = player stage... 3 = win?
 //**************************** initialization ****************************
 void setup()               // executed once at the begining 
   {
@@ -53,10 +54,14 @@ void draw()      // executed at each frame
   
     background(white); // clear screen and paints white background
     pen(black,3); fill(yellow); // shows polyloop with vertex labels
-    for (pts polygon : polygons) {
-      if (polygon == null) break;
-      polygon.drawCurve();
-      polygon.IDs();
+    
+    if (gameStage == -1) {
+      for (pts polygon : polygons) {
+        if (polygon == null) break;
+        polygon.drawCurve();
+        polygon.IDs();
+      }
+      ghost = polygons[0];
     }
     
     if (gameStage == 0) { //code for the cutting part goes in here.
@@ -81,8 +86,9 @@ void draw()      // executed at each frame
         arrow(A,B);
       }
     }
-    
     if (gameStage == 1) {
+      fill(118, 118, 118);
+      ghost.drawCurve();
       pt m = new pt(mouseX, mouseY);
       pt o = new pt(0,0);
       vec arbitraryVec = new vec(-mouseY, -mouseY);
