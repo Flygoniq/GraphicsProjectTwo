@@ -197,7 +197,8 @@ void mouseWheel(MouseEvent event) { // reads mouse wheel and uses to zoom
   }
 
 //**************************** text for name, title and help  ****************************
-String title ="Split Polygon Puzzle",            name ="Student: Alan Jiang, Janet Liang",
+
+String title ="Split Polygon Puzzle",            name ="Student: Alan JIANG, Janet LIANG",
        subtitle = "",
        
        menu="?:(show/hide) help, ~/!/@:snap pdf/jpg/fif, `:(start/stop) recording, S/L:save/load, Q:quit",
